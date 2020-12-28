@@ -5,7 +5,12 @@ import Home from "./components/Home";
 import Header from "./components/Header";
 import Login from "./components/Login";
 import { auth } from "./firebase";
+import { useStateValue } from "./StateProvider";
+import Checkout from './components/Checkout';
+import Orders from './components/Orders';
 function App() {
+  const [{}, dispatch] = useStateValue();
+
   useEffect(() => {
     // will only run once when the app component loads...
 
@@ -28,20 +33,30 @@ function App() {
       }
     });
   }, []);
+
   return (
-    <div className="App">
-      <Router>
+    <Router>
+      <div className="app">
         <Switch>
+          <Route path="/orders">
+            <Header />
+            <Orders/>
+          </Route>
           <Route path="/login">
             <Login />
           </Route>
+          <Route path="/checkout">
+            <Header />
+            <Checkout />
+          </Route>
+          
           <Route path="/">
             <Header />
             <Home />
           </Route>
         </Switch>
-      </Router>
-    </div>
+      </div>
+    </Router>
   );
 }
 
